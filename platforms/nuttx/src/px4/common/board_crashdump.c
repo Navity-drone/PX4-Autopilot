@@ -38,9 +38,9 @@
  * and hardfault log support
  */
 
-#include <board_config.h>
-
 #ifdef CONFIG_BOARD_CRASHDUMP
+
+#include <board_config.h>
 
 #include <stdio.h>
 #include <stdbool.h>

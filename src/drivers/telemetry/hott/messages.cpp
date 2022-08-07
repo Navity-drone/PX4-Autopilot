@@ -51,7 +51,7 @@
 #include <uORB/topics/actuator_motors.h>
 #include <uORB/topics/home_position.h>
 #include <uORB/topics/vehicle_air_data.h>
-#include <uORB/topics/sensor_gps.h>
+#include <uORB/topics/vehicle_gps_position.h>
 
 #include <drivers/drv_hrt.h>
 
@@ -213,7 +213,7 @@ void
 build_gps_response(uint8_t *buffer, size_t *size)
 {
 	/* get a local copy of the battery data */
-	struct sensor_gps_s gps;
+	struct vehicle_gps_position_s gps;
 	memset(&gps, 0, sizeof(gps));
 	orb_copy(ORB_ID(vehicle_gps_position), _gps_sub, &gps);
 

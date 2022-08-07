@@ -109,17 +109,16 @@
 
 MEMORY
 {
-	ITCM_RAM  (rwx) : ORIGIN = 0x00000000, LENGTH =   64K
-	FLASH      (rx) : ORIGIN = 0x08020000, LENGTH = 1792K /* params in last sector */
-
-	DTCM1_RAM (rwx) : ORIGIN = 0x20000000, LENGTH =   64K
-	DTCM2_RAM (rwx) : ORIGIN = 0x20010000, LENGTH =   64K
-	AXI_SRAM  (rwx) : ORIGIN = 0x24000000, LENGTH =  512K /* D1 domain AXI bus */
-	SRAM1     (rwx) : ORIGIN = 0x30000000, LENGTH =  128K /* D2 domain AHB bus */
-	SRAM2     (rwx) : ORIGIN = 0x30020000, LENGTH =  128K /* D2 domain AHB bus */
-	SRAM3     (rwx) : ORIGIN = 0x30040000, LENGTH =   32K /* D2 domain AHB bus */
-	SRAM4     (rwx) : ORIGIN = 0x38000000, LENGTH =   64K /* D3 domain */
-	BKPRAM    (rwx) : ORIGIN = 0x38800000, LENGTH =    4K
+	itcm  (rwx) : ORIGIN = 0x00000000, LENGTH =   64K
+	flash (rx)  : ORIGIN = 0x08020000, LENGTH = 1792K /* params in last sector */
+	dtcm1 (rwx) : ORIGIN = 0x20000000, LENGTH =   64K
+	dtcm2 (rwx) : ORIGIN = 0x20010000, LENGTH =   64K
+	sram  (rwx) : ORIGIN = 0x24000000, LENGTH =  512K
+	sram1 (rwx) : ORIGIN = 0x30000000, LENGTH =  128K
+	sram2 (rwx) : ORIGIN = 0x30020000, LENGTH =  128K
+	sram3 (rwx) : ORIGIN = 0x30040000, LENGTH =   32K
+	sram4 (rwx) : ORIGIN = 0x38000000, LENGTH =   64K
+	bbram (rwx) : ORIGIN = 0x38800000, LENGTH =    4K
 }
 
 OUTPUT_ARCH(arm)
@@ -157,7 +156,7 @@ SECTIONS
 		*(.gnu.linkonce.r.*)
 		_etext = ABSOLUTE(.);
 
-	} > FLASH
+	} > flash
 
 	/*
 	 * Init functions (static constructors and the like)
@@ -166,17 +165,17 @@ SECTIONS
 		_sinit = ABSOLUTE(.);
 		KEEP(*(.init_array .init_array.*))
 		_einit = ABSOLUTE(.);
-	} > FLASH
+	} > flash
 
 
 	.ARM.extab : {
 		*(.ARM.extab*)
-	} > FLASH
+	} > flash
 
 	__exidx_start = ABSOLUTE(.);
 	.ARM.exidx : {
 		*(.ARM.exidx*)
-	} > FLASH
+	} > flash
 	__exidx_end = ABSOLUTE(.);
 
 	_eronly = ABSOLUTE(.);
@@ -187,12 +186,7 @@ SECTIONS
 		*(.gnu.linkonce.d.*)
 		CONSTRUCTORS
 		_edata = ABSOLUTE(.);
-
-		/* Pad out last section as the STM32H7 Flash write size is 256 bits. 32 bytes */
-		. = ALIGN(16);
-		FILL(0xffff)
-		. += 16;
-	} > AXI_SRAM AT > FLASH  = 0xffff
+	} > sram AT > flash
 
 	.bss : {
 		_sbss = ABSOLUTE(.);
@@ -201,7 +195,7 @@ SECTIONS
 		*(COMMON)
 		. = ALIGN(4);
 		_ebss = ABSOLUTE(.);
-	} > AXI_SRAM
+	} > sram
 
 	/* Emit the the D3 power domain section for locating BDMA data */
 
@@ -210,7 +204,7 @@ SECTIONS
 		*(.sram4)
 		. = ALIGN(4);
 		_sram4_heap_start = ABSOLUTE(.);
-	} > SRAM4
+	} > sram4
 
 	/* Stabs debugging sections. */
 	.stab 0 : { *(.stab) }

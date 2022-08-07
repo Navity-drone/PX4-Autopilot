@@ -146,34 +146,38 @@
                             "description": "mission start"
                         },
                         "6": {
+                            "name": "safety_button",
+                            "description": "safety button"
+                        },
+                        "7": {
                             "name": "auto_disarm_land",
                             "description": "landing"
                         },
-                        "7": {
+                        "8": {
                             "name": "auto_disarm_preflight",
                             "description": "auto preflight disarming"
                         },
-                        "8": {
+                        "9": {
                             "name": "kill_switch",
                             "description": "kill switch"
                         },
-                        "9": {
+                        "10": {
                             "name": "lockdown",
                             "description": "lockdown"
                         },
-                        "10": {
+                        "11": {
                             "name": "failure_detector",
                             "description": "failure detector"
                         },
-                        "11": {
+                        "12": {
                             "name": "shutdown",
                             "description": "shutdown request"
                         },
-                        "12": {
+                        "13": {
                             "name": "unit_test",
                             "description": "unit tests"
                         },
-                        "13": {
+                        "14": {
                             "name": "rc_button",
                             "description": "RC (button)"
                         }

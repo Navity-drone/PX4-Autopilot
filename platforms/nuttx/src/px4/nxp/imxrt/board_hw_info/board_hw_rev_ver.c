@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- *   Copyright (C) 2019, 2022 PX4 Development Team. All rights reserved.
+ *   Copyright (C) 2019 PX4 Development Team. All rights reserved.
  *   Author: @author David Sidrane <david_s5@nscdg.com>
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,16 +52,12 @@
 #    define GPIO_HW_REV_DRIVE GPIO_HW_VER_REV_DRIVE
 #    define GPIO_HW_VER_DRIVE GPIO_HW_VER_REV_DRIVE
 #  endif
-
-#define HW_INFO_SIZE (int) arraySize(HW_INFO_INIT_PREFIX) + HW_INFO_VER_DIGITS + HW_INFO_REV_DIGITS
-
-
 /****************************************************************************
  * Private Data
  ****************************************************************************/
 static int hw_version = 0;
 static int hw_revision = 0;
-static char hw_info[HW_INFO_SIZE] = {0};
+static char hw_info[] = HW_INFO_INIT;
 
 /****************************************************************************
  * Protected Functions
@@ -197,7 +193,7 @@ static int read_id_dn(int *id, uint32_t gpio_drive, uint32_t gpio_sense, int adc
 	/* Are Resistors in place ?*/
 
 	uint32_t dn_sum = 0;
-	uint32_t dn = 0;
+	uint16_t dn = 0;
 
 	if ((high ^ low) && low == 0) {
 		/* Yes - Fire up the ADC (it has once control) */
@@ -208,14 +204,14 @@ static int read_id_dn(int *id, uint32_t gpio_drive, uint32_t gpio_sense, int adc
 			for (unsigned av = 0; av < samples; av++) {
 				dn = px4_arch_adc_sample(HW_REV_VER_ADC_BASE, adc_channel);
 
-				if (dn == UINT32_MAX) {
+				if (dn == 0xffff) {
 					break;
 				}
 
 				dn_sum  += dn;
 			}
 
-			if (dn != UINT32_MAX) {
+			if (dn != 0xffff) {
 				*id = dn_sum / samples;
 				rv = OK;
 			}
@@ -342,12 +338,8 @@ int board_determine_hw_info()
 	int rv = determine_hw_info(&hw_revision, &hw_version);
 
 	if (rv == OK) {
-
-		if (rv == OK) {
-
-			snprintf(hw_info, sizeof(hw_info), HW_INFO_INIT_PREFIX HW_INFO_SUFFIX, hw_version, hw_revision);
-
-		}
+		hw_info[HW_INFO_INIT_REV] = board_get_hw_revision() + '0';
+		hw_info[HW_INFO_INIT_VER] = board_get_hw_version() + '0';
 	}
 
 	return rv;

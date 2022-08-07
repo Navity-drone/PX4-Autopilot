@@ -194,10 +194,6 @@ void Ekf::resetHaglRng()
 void Ekf::stopHaglRngFusion()
 {
 	_hagl_sensor_status.flags.range_finder = false;
-	_hagl_innov = 0.f;
-	_hagl_innov_var = 0.f;
-	_hagl_test_ratio = 0.f;
-	_innov_check_fail_status.flags.reject_hagl = false;
 }
 
 void Ekf::fuseHaglRng()
@@ -294,10 +290,6 @@ void Ekf::startHaglFlowFusion()
 void Ekf::stopHaglFlowFusion()
 {
 	_hagl_sensor_status.flags.flow = false;
-	_hagl_innov = 0.f;
-	_hagl_innov_var = 0.f;
-	_hagl_test_ratio = 0.f;
-	_innov_check_fail_status.flags.reject_hagl = false;
 }
 
 void Ekf::resetHaglFlow()

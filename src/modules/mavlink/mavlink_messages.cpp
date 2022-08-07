@@ -120,6 +120,7 @@
 
 #if !defined(CONSTRAINED_FLASH)
 # include "streams/ADSB_VEHICLE.hpp"
+# include "streams/ATT_POS_MOCAP.hpp"
 # include "streams/AUTOPILOT_STATE_FOR_GIMBAL_DEVICE.hpp"
 # include "streams/DEBUG.hpp"
 # include "streams/DEBUG_FLOAT_ARRAY.hpp"
@@ -343,13 +344,13 @@ static const StreamListItem streams_list[] = {
 #if defined(SCALED_IMU3_HPP)
 	create_stream_list_item<MavlinkStreamScaledIMU3>(),
 #endif // SCALED_IMU3_HPP
-#if defined(SCALED_PRESSURE_HPP)
+#if defined(SCALED_PRESSURE)
 	create_stream_list_item<MavlinkStreamScaledPressure>(),
 #endif // SCALED_PRESSURE
-#if defined(SCALED_PRESSURE2_HPP)
+#if defined(SCALED_PRESSURE2)
 	create_stream_list_item<MavlinkStreamScaledPressure2>(),
 #endif // SCALED_PRESSURE2
-#if defined(SCALED_PRESSURE3_HPP)
+#if defined(SCALED_PRESSURE3)
 	create_stream_list_item<MavlinkStreamScaledPressure3>(),
 #endif // SCALED_PRESSURE3
 #if defined(ACTUATOR_OUTPUT_STATUS_HPP)
@@ -400,6 +401,9 @@ static const StreamListItem streams_list[] = {
 #if defined(VIBRATION_HPP)
 	create_stream_list_item<MavlinkStreamVibration>(),
 #endif // VIBRATION_HPP
+#if defined(ATT_POS_MOCAP_HPP)
+	create_stream_list_item<MavlinkStreamAttPosMocap>(),
+#endif // ATT_POS_MOCAP_HPP
 #if defined(AUTOPILOT_STATE_FOR_GIMBAL_DEVICE_HPP)
 	create_stream_list_item<MavlinkStreamAutopilotStateForGimbalDevice>(),
 #endif // AUTOPILOT_STATE_FOR_GIMBAL_DEVICE_HPP

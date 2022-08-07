@@ -50,7 +50,6 @@
 #include <drivers/drv_hrt.h>
 #include <lib/parameters/param.h>
 #include <lib/perf/perf_counter.h>
-#include <stdlib.h>
 
 #include "dataman.h"
 

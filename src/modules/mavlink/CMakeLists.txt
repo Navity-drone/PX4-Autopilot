@@ -117,13 +117,10 @@ if(PX4_TESTING)
 endif()
 
 px4_add_unit_gtest(SRC MavlinkStatustextHandlerTest.cpp
-	INCLUDES
-		${MAVLINK_LIBRARY_DIR}/${MAVLINK_DIALECT}
+	INCLUDES ${MAVLINK_LIBRARY_DIR}/${MAVLINK_DIALECT}
 	COMPILE_FLAGS
 		-Wno-address-of-packed-member # TODO: fix in c_library_v2
-		-Wno-cast-align # TODO: fix
-	LINKLIBS
-		modules__mavlink
+		LINKLIBS modules__mavlink
 	)
 
 if(CONFIG_NET AND "${PX4_PLATFORM}" MATCHES "nuttx")

@@ -37,7 +37,6 @@
 #include <future>
 #include <thread>
 #include <unistd.h>
-#include <cmath>
 
 std::string connection_url {"udp://"};
 std::optional<float> speed_factor {std::nullopt};
@@ -65,7 +64,7 @@ void AutopilotTester::connect(const std::string uri)
 	REQUIRE(poll_condition_with_timeout(
 	[this]() { return _mavsdk.systems().size() > 0; }, std::chrono::seconds(25)));
 
-	auto system = get_system();
+	auto system = _mavsdk.systems().at(0);
 
 	_action.reset(new Action(system));
 	_failure.reset(new Failure(system));
@@ -533,11 +532,6 @@ void AutopilotTester::check_tracks_mission(float corridor_radius_m)
 			CHECK(distance_to_trajectory < corridor_radius_m);
 		}
 	});
-}
-
-void AutopilotTester::check_current_altitude(float target_rel_altitude_m, float max_distance_m)
-{
-	CHECK(std::abs(_telemetry->position().relative_altitude_m - target_rel_altitude_m) <= max_distance_m);
 }
 
 std::array<float, 3> AutopilotTester::get_current_position_ned()

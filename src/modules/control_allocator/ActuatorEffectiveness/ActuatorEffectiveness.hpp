@@ -41,8 +41,6 @@
 
 #pragma once
 
-#include <cstdint>
-
 #include <matrix/matrix/math.hpp>
 
 enum class AllocationMethod {

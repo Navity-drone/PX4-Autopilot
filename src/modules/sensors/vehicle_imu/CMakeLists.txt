@@ -32,6 +32,7 @@
 ############################################################################
 
 px4_add_library(vehicle_imu
+	Integrator.hpp
 	VehicleIMU.cpp
 	VehicleIMU.hpp
 )

@@ -39,7 +39,6 @@
 #include <memory>
 #include <atomic>
 #include <pthread.h>
-#include <unistd.h>
 
 #include "lockstep_components.h"
 

@@ -50,6 +50,7 @@ class FlightTaskManualPositionSmoothVel : public FlightTaskManualPosition
 {
 public:
 	FlightTaskManualPositionSmoothVel() = default;
+
 	virtual ~FlightTaskManualPositionSmoothVel() = default;
 
 	bool activate(const trajectory_setpoint_s &last_setpoint) override;

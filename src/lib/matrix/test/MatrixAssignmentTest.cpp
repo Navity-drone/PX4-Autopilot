@@ -31,8 +31,6 @@
  *
  ****************************************************************************/
 
-#include <cmath>
-
 #include <gtest/gtest.h>
 #include <matrix/math.hpp>
 
@@ -67,7 +65,7 @@ TEST(MatrixAssignmentTest, Assignment)
 
 	for (size_t i = 0; i < 3; i++) {
 		for (size_t j = 0; j < 3; j++) {
-			EXPECT_TRUE(std::isnan(m_nan(i, j)));
+			EXPECT_TRUE(isnan(m_nan(i, j)));
 		}
 	}
 

@@ -66,7 +66,6 @@
 #include <lib/perf/perf_counter.h>
 
 #include <uORB/Subscription.hpp>
-#include <uORB/SubscriptionCallback.hpp>
 #include <uORB/SubscriptionInterval.hpp>
 #include <uORB/topics/log_message.h>
 #include <uORB/topics/parameter_update.h>
@@ -120,8 +119,7 @@ public:
 	typedef UAVCAN_DRIVER::CanInitHelper<RxQueueLenPerIface> CanInitHelper;
 	typedef uavcan::protocol::file::BeginFirmwareUpdate BeginFirmwareUpdate;
 
-	UavcanNode(CanInitHelper *can_init, uint32_t bitrate, uavcan::ICanDriver &can_driver,
-		   uavcan::ISystemClock &system_clock);
+	UavcanNode(uavcan::ICanDriver &can_driver, uavcan::ISystemClock &system_clock);
 
 	virtual		~UavcanNode();
 
@@ -140,9 +138,6 @@ public:
 
 	/* The bit rate that can be passed back to the bootloader */
 	int32_t active_bitrate{0};
-	uint32_t _bitrate;
-
-	CanInitHelper *_can;
 
 private:
 	void Run() override;
@@ -176,7 +171,7 @@ private:
 	IntrusiveSortedList<UavcanSubscriberBase *> _subscriber_list;
 
 	uORB::SubscriptionInterval _parameter_update_sub{ORB_ID(parameter_update), 1_s};
-	uORB::SubscriptionCallbackWorkItem _log_message_sub{this, ORB_ID(log_message)};
+	uORB::Subscription _log_message_sub{ORB_ID(log_message)};
 
 	UavcanNodeParamManager _param_manager;
 	uavcan::ParamServer _param_server;

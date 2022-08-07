@@ -39,9 +39,8 @@
 #include <nuttx/ioexpander/gpio.h>
 #endif
 
-ADC::ADC(uint32_t base_address, uint32_t channels, bool publish_adc_report) :
+ADC::ADC(uint32_t base_address, uint32_t channels) :
 	ScheduledWorkItem(MODULE_NAME, px4::wq_configurations::hp_default),
-	_publish_adc_report(publish_adc_report),
 	_sample_perf(perf_alloc(PC_ELAPSED, MODULE_NAME": sample")),
 	_base_address(base_address)
 {
@@ -117,10 +116,7 @@ void ADC::Run()
 		_samples[i].am_data = sample(_samples[i].am_channel);
 	}
 
-	if (_publish_adc_report) {
-		update_adc_report(now);
-	}
-
+	update_adc_report(now);
 	update_system_power(now);
 }
 
@@ -356,8 +352,7 @@ int ADC::custom_command(int argc, char *argv[])
 
 int ADC::task_spawn(int argc, char *argv[])
 {
-	bool publish_adc_report = !(argc >= 2 && strcmp(argv[1], "-n") == 0);
-	ADC *instance = new ADC(SYSTEM_ADC_BASE, ADC_CHANNELS, publish_adc_report);
+	ADC *instance = new ADC(SYSTEM_ADC_BASE, ADC_CHANNELS);
 
 	if (instance) {
 		_object.store(instance);
@@ -394,7 +389,6 @@ ADC driver.
 	PRINT_MODULE_USAGE_NAME("adc", "driver");
 	PRINT_MODULE_USAGE_COMMAND("start");
 	PRINT_MODULE_USAGE_COMMAND("test");
-	PRINT_MODULE_USAGE_PARAM_FLAG('n', "Do not publish ADC report, only system power", true);
 	PRINT_MODULE_USAGE_DEFAULT_COMMANDS();
 
 	return 0;

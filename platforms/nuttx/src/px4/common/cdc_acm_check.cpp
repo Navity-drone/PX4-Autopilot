@@ -31,8 +31,6 @@
  *
  ****************************************************************************/
 
-#include <board_config.h>
-
 #if defined(CONFIG_SYSTEM_CDCACM)
 __BEGIN_DECLS
 #include <arch/board/board.h>

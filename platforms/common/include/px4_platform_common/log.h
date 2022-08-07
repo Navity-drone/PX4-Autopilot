@@ -33,7 +33,7 @@
 
 /**
  * @file log.h
- * Platform dependent logging/debug implementation
+ * Platform dependant logging/debug implementation
  */
 
 #pragma once

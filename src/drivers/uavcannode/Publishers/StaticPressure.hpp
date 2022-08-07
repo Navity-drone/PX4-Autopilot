@@ -74,7 +74,7 @@ public:
 
 		if (uORB::SubscriptionCallbackWorkItem::update(&baro)) {
 			uavcan::equipment::air_data::StaticPressure static_pressure{};
-			static_pressure.static_pressure = baro.pressure;
+			static_pressure.static_pressure = baro.pressure * 100; // millibar -> pascals
 			uavcan::Publisher<uavcan::equipment::air_data::StaticPressure>::broadcast(static_pressure);
 
 			// ensure callback is registered

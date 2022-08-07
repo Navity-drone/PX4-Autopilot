@@ -42,8 +42,6 @@
 #include <px4_platform_common/module.h>
 #include <px4_platform_common/px4_config.h>
 
-#include <stdlib.h>
-
 #include <nuttx/ioexpander/gpio.h>
 #include <fcntl.h>
 

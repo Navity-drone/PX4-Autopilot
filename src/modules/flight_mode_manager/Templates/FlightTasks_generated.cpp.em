@@ -91,7 +91,7 @@ upperCase = lambda s: s[:].upper() if s else ''
 
 @[end for]@
 @[end if]@
-	// ignore all unknown commands
+	// ignore all unkown commands
 	default : return FlightTaskIndex::None;
 	}
 }

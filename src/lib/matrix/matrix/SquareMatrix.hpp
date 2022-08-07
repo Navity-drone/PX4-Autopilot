@@ -8,8 +8,6 @@
 
 #pragma once
 
-#include <float.h> // FLT_EPSILON
-
 #include "math.hpp"
 
 namespace matrix
@@ -341,12 +339,12 @@ bool inv(const SquareMatrix<Type, M> &A, SquareMatrix<Type, M> &inv, size_t rank
 	for (size_t n = 0; n < rank; n++) {
 
 		// if diagonal is zero, swap with row below
-		if (std::fabs(U(n, n)) < Type(FLT_EPSILON)) {
+		if (fabs(U(n, n)) < Type(FLT_EPSILON)) {
 			//printf("trying pivot for row %d\n",n);
 			for (size_t i = n + 1; i < rank; i++) {
 
 				//printf("\ttrying row %d\n",i);
-				if (std::fabs(U(i, n)) > Type(FLT_EPSILON)) {
+				if (fabs(U(i, n)) > Type(FLT_EPSILON)) {
 					//printf("swapped %d\n",i);
 					U.swapRows(i, n);
 					P.swapRows(i, n);
@@ -366,7 +364,7 @@ bool inv(const SquareMatrix<Type, M> &A, SquareMatrix<Type, M> &inv, size_t rank
 #endif
 
 		// failsafe, return zero matrix
-		if (std::fabs(static_cast<float>(U(n, n))) < FLT_EPSILON) {
+		if (fabs(static_cast<float>(U(n, n))) < FLT_EPSILON) {
 			return false;
 		}
 
@@ -440,7 +438,7 @@ bool inv(const SquareMatrix<Type, M> &A, SquareMatrix<Type, M> &inv, size_t rank
 	//check sanity of results
 	for (size_t i = 0; i < rank; i++) {
 		for (size_t j = 0; j < rank; j++) {
-			if (!std::isfinite(P(i, j))) {
+			if (!is_finite(P(i, j))) {
 				return false;
 			}
 		}
@@ -456,7 +454,7 @@ bool inv(const SquareMatrix<Type, 2> &A, SquareMatrix<Type, 2> &inv)
 {
 	Type det = A(0, 0) * A(1, 1) - A(1, 0) * A(0, 1);
 
-	if (std::fabs(static_cast<float>(det)) < FLT_EPSILON || !std::isfinite(det)) {
+	if (fabs(static_cast<float>(det)) < FLT_EPSILON || !is_finite(det)) {
 		return false;
 	}
 
@@ -475,7 +473,7 @@ bool inv(const SquareMatrix<Type, 3> &A, SquareMatrix<Type, 3> &inv)
 		   A(0, 1) * (A(1, 0) * A(2, 2) - A(1, 2) * A(2, 0)) +
 		   A(0, 2) * (A(1, 0) * A(2, 1) - A(1, 1) * A(2, 0));
 
-	if (std::fabs(static_cast<float>(det)) < FLT_EPSILON || !std::isfinite(det)) {
+	if (fabs(static_cast<float>(det)) < FLT_EPSILON || !is_finite(det)) {
 		return false;
 	}
 
@@ -534,7 +532,7 @@ SquareMatrix <Type, M> cholesky(const SquareMatrix<Type, M> &A)
 					L(j, j) = 0;
 
 				} else {
-					L(j, j) = std::sqrt(res);
+					L(j, j) = sqrt(res);
 				}
 
 			} else {
